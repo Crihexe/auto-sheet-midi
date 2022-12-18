@@ -14,6 +14,8 @@ import javax.sound.midi.Track;
 import javax.sound.midi.Transmitter;
 import javax.swing.Timer;
 
+import com.crihexe.sheet.Note;
+
 public class Main {
 
 	public static void main(String[] args) throws Exception {

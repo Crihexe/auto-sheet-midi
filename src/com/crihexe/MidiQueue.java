@@ -2,6 +2,8 @@ package com.crihexe;
 
 import java.util.ArrayList;
 
+import com.crihexe.sheet.Note;
+
 public class MidiQueue {
 	
 	private static ArrayList<Note> notes = new ArrayList<Note>();

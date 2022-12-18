@@ -4,6 +4,8 @@ import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 
+import com.crihexe.sheet.Note;
+
 public class LiveReceiver implements Receiver {
 	
 	

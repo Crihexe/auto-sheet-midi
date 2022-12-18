@@ -1,13 +1,15 @@
 package com.crihexe;
 
-import javax.sound.midi.Track;
+import java.util.ArrayList;
+
+import com.crihexe.sheet.Note;
 
 public class NoteHandler implements Runnable {
 	
-	private Note[] track;
+	private ArrayList<Note> track;
 	private int counter = 0;
 	
-	public NoteHandler(Note[] track) {
+	public NoteHandler(ArrayList<Note> track) {
 		this.track = track;
 	}
 
@@ -19,7 +21,7 @@ public class NoteHandler implements Runnable {
 			if(MidiQueue.ready()) {
 				Note note = MidiQueue.pop();
 				System.out.println(note);
-				if(note.equals(track[counter])) {
+				if(note.equals(track.get(counter))) {
 					counter++;
 					System.out.println("GIUSTO");
 				}

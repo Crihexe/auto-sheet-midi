@@ -1,4 +1,4 @@
-package com.crihexe;
+package com.crihexe.sheet;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,8 @@ public class Note {
 	private int octave;
 	private int note;
 	private int velocity;
+	
+	private int duration = 0;
 	
 	public Note(int key, int octave, int note, int velocity) {
 		this.key = key;
@@ -45,6 +47,14 @@ public class Note {
 		return velocity;
 	}
 	
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
 	public String toString() {
 		return "Note " + getNoteName() + octave + " key=" + key + " velocity: " + velocity;
 	}
@@ -57,9 +67,9 @@ public class Note {
 		return note.key == key && note.note == this.note && note.octave == octave && note.velocity == velocity;
 	}
 	
-	public static Note fromShortMessage(ShortMessage sm) {
-		int key = sm.getData1();
-		return new Note(key, (key/12)-1, key % 12, sm.getData2());
+	public static Note fromShortMessage(ShortMessage m) {
+		int key = m.getData1();
+		return new Note(key, (key/12)-1, key % 12, m.getData2());
 	}
 	
 	public static Note[] trackToNoteArray(Track track) {
