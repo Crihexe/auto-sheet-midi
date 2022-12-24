@@ -14,7 +14,7 @@ public class Note {
 	private int note;
 	private int velocity;
 	
-	private int duration = 0;
+	private long duration = 0;
 	
 	public Note(int key, int octave, int note, int velocity) {
 		this.key = key;
@@ -22,9 +22,13 @@ public class Note {
 		this.note = note;
 		this.velocity = velocity;
 	}
-
-	public static String[] getNoteNames() {
-		return NOTE_NAMES;
+	
+	public Note(Note note) {
+		this(note.key, note.octave, note.note, note.velocity);
+	}
+	
+	public Note(Note note, int velocity) {
+		this(note.key, note.octave, note.note, velocity);
 	}
 
 	public int getKey() {
@@ -47,16 +51,20 @@ public class Note {
 		return velocity;
 	}
 	
-	public int getDuration() {
+	public void setVelocity(int velocity) {
+		this.velocity = velocity;
+	}
+	
+	public long getDuration() {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
+	public void setDuration(long duration) {
 		this.duration = duration;
 	}
 
 	public String toString() {
-		return "Note " + getNoteName() + octave + " key=" + key + " velocity: " + velocity;
+		return "Note " + getNoteName() + octave + " key=" + key + " velocity: " + velocity + " duration: " + duration;
 	}
 	
 	public boolean equals(Note note) {
@@ -65,6 +73,10 @@ public class Note {
 	
 	public boolean strictlyEquals(Note note) {
 		return note.key == key && note.note == this.note && note.octave == octave && note.velocity == velocity;
+	}
+	
+	public static String[] getNoteNames() {
+		return NOTE_NAMES;
 	}
 	
 	public static Note fromShortMessage(ShortMessage m) {

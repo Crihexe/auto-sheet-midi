@@ -34,6 +34,10 @@ public class Sheet {
 		return entries;
 	}
 	
+	public int size() {
+		return entries.size();
+	}
+	
 	public SheetEntry getLast() {
 		return entries.get(entries.size()-1);
 	}

@@ -3,7 +3,6 @@ package com.crihexe;
 import java.io.File;
 import java.io.IOException;
 
-import javax.sound.midi.ControllerEventListener;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
 import javax.sound.midi.MidiSystem;
@@ -14,7 +13,7 @@ import javax.sound.midi.Track;
 import javax.sound.midi.Transmitter;
 import javax.swing.Timer;
 
-import com.crihexe.sheet.Note;
+import com.crihexe.sheet.SheetBuilder;
 
 public class Main {
 
@@ -55,7 +54,7 @@ public class Main {
 		
 		
 		Sequence fileSeq = MidiSystem.getSequence(new File("testjava.mid"));
-		new Thread(new NoteHandler(Note.trackToNoteArray(fileSeq.getTracks()[0]))).start();
+		//new Thread(new NoteHandler(Note.trackToNoteArray(fileSeq.getTracks()[0]))).start();
 		
 		new Timer(10000, e -> {
 			
@@ -67,6 +66,9 @@ public class Main {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			
+			SheetBuilder sb = new SheetBuilder(new Track[] {currentTrack});
+			sb.build();
 		}).start();
 		
 	}

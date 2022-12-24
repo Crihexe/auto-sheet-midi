@@ -12,7 +12,9 @@ public class LiveReceiver implements Receiver {
 	@Override
 	public void send(MidiMessage message, long timeStamp) {
 		if(message instanceof ShortMessage sm && sm.getCommand() == ShortMessage.NOTE_ON) {
-			MidiQueue.addNote(Note.fromShortMessage(sm));
+			Note note = Note.fromShortMessage(sm);
+			System.out.println(note);
+			MidiQueue.addNote(note);
 		}
 	}
 

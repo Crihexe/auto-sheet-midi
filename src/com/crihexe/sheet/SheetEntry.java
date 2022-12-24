@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class SheetEntry {
 	
 	private ArrayList<Note> notes;
-	private int delta;
+	private long delta;
 	
-	public SheetEntry(int delta) {
+	public SheetEntry(long delta) {
 		notes = new ArrayList<Note>();
 		this.delta = delta;
 	}
@@ -28,15 +28,22 @@ public class SheetEntry {
 		return notes;
 	}
 
-	public int getDelta() {
+	public long getDelta() {
 		return delta;
 	}
 	
-	public void setDelta(int delta) {
+	public void setDelta(long delta) {
 		this.delta = delta;
 	}
 	
-	public static SheetEntry pause(int delta) {
+	public String toString() {
+		String s = "Notes: ";
+		for(Note n : notes) s += n.getNoteName() + "(" + n.getDuration() + "t) ";
+		s += "Delta = " + delta;
+		return s;
+	}
+	
+	public static SheetEntry pause(long delta) {	// c'è qualcosa che non va FORSE
 		return new SheetEntry(delta);
 	}
 	
