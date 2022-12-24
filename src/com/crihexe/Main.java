@@ -53,10 +53,15 @@ public class Main {
 		sequencer.startRecording();
 		
 		
-		Sequence fileSeq = MidiSystem.getSequence(new File("testjava.mid"));
+		Sequence fileSeq = MidiSystem.getSequence(new File("merry.mid"));
+		//System.out.println(fileSeq.getTracks().length);
+		SheetBuilder sb = new SheetBuilder(fileSeq.getTracks());
+		sb.build();
+		
+		
 		//new Thread(new NoteHandler(Note.trackToNoteArray(fileSeq.getTracks()[0]))).start();
 		
-		new Timer(10000, e -> {
+		/*new Timer(10000, e -> {
 			
 			Sequence tmp = sequencer.getSequence();
 			sequencer.stopRecording();
@@ -69,7 +74,7 @@ public class Main {
 			
 			SheetBuilder sb = new SheetBuilder(new Track[] {currentTrack});
 			sb.build();
-		}).start();
+		}).start();*/
 		
 	}
 

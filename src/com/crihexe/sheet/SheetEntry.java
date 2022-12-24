@@ -38,7 +38,7 @@ public class SheetEntry {
 	
 	public String toString() {
 		String s = "Notes: ";
-		for(Note n : notes) s += n.getNoteName() + "(" + n.getDuration() + "t) ";
+		for(Note n : notes) s += n.getNoteName() + n.getOctave() + "(" + n.getDuration() + "t) ";
 		s += "Delta = " + delta;
 		return s;
 	}

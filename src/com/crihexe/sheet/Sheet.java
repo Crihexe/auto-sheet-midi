@@ -46,6 +46,17 @@ public class Sheet {
 		return (ArrayList<SheetEntry>) entries.subList(index(index-1), index(index+1));
 	}
 	
+	public String toString() {
+		String s = "";
+		long time = 0;
+		for(int i = 0; i < entries.size(); i++) {
+			time += entries.get(i).getDelta();
+			s += entries.get(i) + "\n\n";
+		}
+		s += "\n\n\ntotal time: " + time;
+		return s;
+	}
+	
 	private int index(int index) {
 		if(index < 0) return 0;
 		if(index >= entries.size()) return entries.size()-1;

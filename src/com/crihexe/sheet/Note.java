@@ -7,7 +7,7 @@ import javax.sound.midi.Track;
 
 public class Note {
 	
-	private static final String[] NOTE_NAMES = {"DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI"};
+	private static final String[] NOTE_NAMES = {"DO", "DO#", "RE", "MIb", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "SIb", "SI"};
 	
 	private int key;
 	private int octave;
