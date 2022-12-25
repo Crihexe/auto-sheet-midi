@@ -6,6 +6,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.swing.Timer;
 
+import com.crihexe.gui.GUI;
 import com.crihexe.live.Device;
 import com.crihexe.live.LiveEngine;
 import com.crihexe.sheet.SheetBuilder;
@@ -42,12 +43,17 @@ public class Main {
 		
 		sequencer.startRecording();*/
 		
+		GUI gui = new GUI();
+		gui.show();
 		
 		Sequence fileSeq = MidiSystem.getSequence(new File("single_1track.mid"));
 		SheetBuilder sb = new SheetBuilder("single1track", fileSeq.getTracks());
 		sb.build();
 		
+		gui.getView().setSheet(sb.result());
+		
 		LiveEngine engine = new LiveEngine(sb.result());
+		engine.setSheetPointerListener(gui.getView());
 		
 		for(int i = 0; i < Device.deviceList().length; i++) {
 			System.out.println(Device.getInfoDetails(Device.deviceList()[i]));

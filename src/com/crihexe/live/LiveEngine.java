@@ -13,6 +13,8 @@ public class LiveEngine implements Runnable, LiveMonitor {
 	
 	private final Thread thread;
 	
+	private SheetPointerListener pointerListener;
+	
 	public LiveEngine(Sheet sheet) {
 		this.sheet = sheet;
 		thread = new Thread(this, "Live Engine - \"" + this.sheet.getID() + "\"");
@@ -25,6 +27,10 @@ public class LiveEngine implements Runnable, LiveMonitor {
 		
 		thread.start();
 		return this;
+	}
+	
+	public void setSheetPointerListener(SheetPointerListener pointerListener) {
+		this.pointerListener = pointerListener;
 	}
 
 	/*
@@ -54,11 +60,16 @@ public class LiveEngine implements Runnable, LiveMonitor {
 	public void run() {
 		while(true);
 	}
+	
+	public void next() {
+		pointer++;
+		if(pointerListener != null) pointerListener.onPointerChange(pointer);
+	}
 
 	@Override
 	public void onMidiOn(Note note, long timeStamp, long delta) {
 		if(note.getKey() == 108) System.exit(0);
-		//System.out.println("ON " + note + " tick:" + timeStamp + " delta:" + delta);
+		System.out.println("ON " + note + " tick:" + timeStamp + " delta:" + delta);
 		
 		if(pointer == sheet.size()) {
 			System.out.println("Hai completato lo spartito!");
@@ -66,7 +77,7 @@ public class LiveEngine implements Runnable, LiveMonitor {
 		}
 		
 		if(sheet.getEntry(pointer).contains(note)) {
-			pointer++;
+			next();
 			System.out.println("yes, " + note);
 		} else System.out.println("no. retry");
 		
