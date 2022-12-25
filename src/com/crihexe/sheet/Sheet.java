@@ -49,6 +49,10 @@ public class Sheet {
 		return entries.get(entries.size()-1);
 	}
 	
+	public SheetEntry getEntry(int index) {
+		return entries.get(index);
+	}
+	
 	public ArrayList<SheetEntry> getNearEntries(int index) {
 		return (ArrayList<SheetEntry>) entries.subList(index(index-1), index(index+1));
 	}

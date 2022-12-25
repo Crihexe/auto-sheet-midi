@@ -64,7 +64,7 @@ public class SheetBuilder {
 			
 		}
 		
-		//System.out.println(sheet.toString() + "\nTicks: " + track.ticks());
+		System.out.println(sheet.toString() + "\nTicks: " + track.ticks());
 		
 	}
 	

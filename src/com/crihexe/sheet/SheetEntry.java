@@ -36,6 +36,18 @@ public class SheetEntry {
 		this.delta = delta;
 	}
 	
+	public boolean contains(Note note) {
+		for(Note n : notes)
+			if(n.equals(note)) return true;
+		return false;
+	}
+	
+	public boolean strictlyContains(Note note) {
+		for(Note n : notes)
+			if(n.strictlyEquals(note)) return true;
+		return false;
+	}
+	
 	public String toString() {
 		String s = "Notes: ";
 		for(Note n : notes) s += n.getNoteName() + n.getOctave() + "(" + n.getDuration() + "t) ";

@@ -43,8 +43,8 @@ public class Main {
 		sequencer.startRecording();*/
 		
 		
-		Sequence fileSeq = MidiSystem.getSequence(new File("merry.mid"));
-		SheetBuilder sb = new SheetBuilder("merry", fileSeq.getTracks());
+		Sequence fileSeq = MidiSystem.getSequence(new File("single_1track.mid"));
+		SheetBuilder sb = new SheetBuilder("single1track", fileSeq.getTracks());
 		sb.build();
 		
 		LiveEngine engine = new LiveEngine(sb.result());
@@ -56,7 +56,7 @@ public class Main {
 		engine.start();
 		
 		new Timer(10000, e -> {
-			System.exit(0);
+			//System.exit(0);
 		}).start();
 		
 		//new Thread(new NoteHandler(Note.trackToNoteArray(fileSeq.getTracks()[0]))).start();

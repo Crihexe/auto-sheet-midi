@@ -22,13 +22,19 @@ public class LiveReceiver implements Receiver {
 
 	@Override
 	public void send(MidiMessage message, long timeStamp) {
+		timeStamp /= 1000;	// come nel formato dei file
+		
 		if(message instanceof ShortMessage sm) {
 			if(sm.getData2() == 0 || sm.getCommand() == ShortMessage.NOTE_OFF) {	// midi off
 				for(int j = pressedNotes.size() - 1; j >= 0; j--) {
 					if(pressedNotes.get(j).t1.equals(Note.fromShortMessage(sm))) {
 						pressedNotes.get(j).t1.setDuration(timeStamp - pressedNotes.get(j).t2);
 						
-						callback.onMidiOff(pressedNotes.get(j).t1, timeStamp);
+						try {
+							callback.onMidiOff(pressedNotes.get(j).t1, timeStamp);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
 						
 						pressedNotes.remove(j);
 						
@@ -39,7 +45,11 @@ public class LiveReceiver implements Receiver {
 				Note note = Note.fromShortMessage(sm);
 				pressedNotes.add(new Pair<Note, Long>(note, timeStamp));
 				
-				callback.onMidiOn(note, timeStamp, timeStamp - lastOnTick);
+				try {
+					callback.onMidiOn(note, timeStamp, timeStamp - lastOnTick);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 				
 				lastOnTick = timeStamp;
 			} else callback.onOtherShortMessage(sm, timeStamp);
