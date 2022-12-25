@@ -1,4 +1,4 @@
-package com.crihexe;
+package com.crihexe.util;
 
 public class Pair<T1, T2> {
 	

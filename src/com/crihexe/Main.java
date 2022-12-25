@@ -1,30 +1,20 @@
 package com.crihexe;
 
 import java.io.File;
-import java.io.IOException;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiDevice.Info;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Receiver;
 import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.sound.midi.Track;
-import javax.sound.midi.Transmitter;
 import javax.swing.Timer;
 
+import com.crihexe.live.Device;
+import com.crihexe.live.LiveEngine;
 import com.crihexe.sheet.SheetBuilder;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		Info[] infos = MidiSystem.getMidiDeviceInfo();
-		for(int i = 0; i < infos.length; i++) {
-			System.out.println(infos[i].getName() + " - " + infos[i].getDescription());
-		}
-		
-		MidiDevice inputDevice = MidiSystem.getMidiDevice(infos[5]);
+		/*MidiDevice inputDevice = MidiSystem.getMidiDevice(Device.deviceList()[5]);
 		
 		Sequencer sequencer = MidiSystem.getSequencer();
 		LiveReceiver receiver;
@@ -50,14 +40,24 @@ public class Main {
 		
 		sequencer.recordEnable(currentTrack, -1);
 		
-		sequencer.startRecording();
+		sequencer.startRecording();*/
 		
 		
 		Sequence fileSeq = MidiSystem.getSequence(new File("merry.mid"));
-		//System.out.println(fileSeq.getTracks().length);
-		SheetBuilder sb = new SheetBuilder(fileSeq.getTracks());
+		SheetBuilder sb = new SheetBuilder("merry", fileSeq.getTracks());
 		sb.build();
 		
+		LiveEngine engine = new LiveEngine(sb.result());
+		
+		for(int i = 0; i < Device.deviceList().length; i++) {
+			System.out.println(Device.getInfoDetails(Device.deviceList()[i]));
+		}
+		Device.selectDevice(Device.deviceList()[5]);
+		engine.start();
+		
+		new Timer(10000, e -> {
+			System.exit(0);
+		}).start();
 		
 		//new Thread(new NoteHandler(Note.trackToNoteArray(fileSeq.getTracks()[0]))).start();
 		

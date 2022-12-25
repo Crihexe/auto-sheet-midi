@@ -3,19 +3,18 @@ package com.crihexe.sheet;
 import java.util.ArrayList;
 
 import javax.sound.midi.MidiEvent;
-import javax.sound.midi.MidiMessage;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 
-import com.crihexe.Pair;
+import com.crihexe.util.Pair;
 
 public class SheetBuilder {
 	
 	private Sheet sheet;
 	private Track tracks[];
 	
-	public SheetBuilder(Track tracks[]) {
-		sheet = new Sheet();
+	public SheetBuilder(String ID, Track tracks[]) {
+		sheet = new Sheet(ID);
 		this.tracks = tracks;
 	}
 	
@@ -36,15 +35,14 @@ public class SheetBuilder {
 			
 			if(e.getMessage() instanceof ShortMessage sm) {
 				if(sm.getCommand() == ShortMessage.NOTE_OFF || (sm.getCommand() == ShortMessage.NOTE_ON && sm.getData2() == 0)) {
-					
 					// dobbiamo controllare che la nota che è andata off sia presente tra le note che sono attualmente premute
 					for(int j = pressedNotes.size() - 1; j >= 0; j--) {	// al contrario perché è più probabile trovare note che stanno essendo premute per poco che note lunghe
 						if(pressedNotes.get(j).t1.equals(Note.fromShortMessage(sm))) {	// controllo che tutti i valori siano uguali tranne la pressione del tasto
 							pressedNotes.get(j).t1.setDuration(e.getTick() - pressedNotes.get(j).t2);
+							pressedNotes.remove(j);
 							break;
 						}
 					}
-					
 				} else if(sm.getCommand() == ShortMessage.NOTE_ON) {
 					// prima controllo che ci sia già un'entry a questo delta
 					// gli eventi arrivano in ordine, quindi non avrò mai un evento accaduto prima del precedente, al massimo possono essere accaduti contemporaneamente
@@ -66,7 +64,7 @@ public class SheetBuilder {
 			
 		}
 		
-		System.out.println(sheet.toString() + "\nTicks: " + track.ticks());
+		//System.out.println(sheet.toString() + "\nTicks: " + track.ticks());
 		
 	}
 	

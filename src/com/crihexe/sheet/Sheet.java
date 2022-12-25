@@ -4,10 +4,17 @@ import java.util.ArrayList;
 
 public class Sheet {
 	
+	private final String id;
+	
 	private ArrayList<SheetEntry> entries;
 	
-	public Sheet() {
+	public Sheet(String id) {
+		this.id = id;
 		entries = new ArrayList<SheetEntry>();
+	}
+	
+	public String getID() {
+		return id;
 	}
 	
 	public void add(SheetEntry entry) {
