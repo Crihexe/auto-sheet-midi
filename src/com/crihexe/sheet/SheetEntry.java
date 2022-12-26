@@ -46,10 +46,8 @@ public class SheetEntry {
 	
 	public boolean checkChord(LiveChord chord) {
 		boolean r = true;
-		for(int i = 0; i < chord.chord.size(); i++) {
+		for(int i = 0; i < chord.chord.size(); i++)
 			r &= contains(chord.chord.get(i));
-			System.out.println(r);
-		}
 		return r;
 	}
 	
@@ -57,6 +55,11 @@ public class SheetEntry {
 		for(Note n : notes)
 			if(n.strictlyEquals(note)) return true;
 		return false;
+	}
+	
+	public boolean hasSingleNote(Note note) {
+		if(notes.size() != 1) return false;
+		return notes.get(0).equals(note);
 	}
 	
 	public String toString() {

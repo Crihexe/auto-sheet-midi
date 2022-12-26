@@ -43,6 +43,10 @@ public class Device {
 		}
 	}
 	
+	public static long getTime() {
+		return inputDevice.getMicrosecondPosition()/1000L;
+	}
+	
 	public static boolean ready() {
 		return inputDevice != null && receiver != null && transmitter != null;
 	}

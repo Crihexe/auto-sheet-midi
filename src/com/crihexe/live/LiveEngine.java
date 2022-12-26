@@ -112,7 +112,7 @@ public class LiveEngine implements Runnable, LiveMonitor {
 			return;
 		}
 		
-		if(sheet.getEntry(pointer).contains(note)) {
+		if(sheet.getEntry(pointer).hasSingleNote(note)) {
 			System.out.println("yes, " + note);
 			next();
 		} else System.out.println("no. retry");
