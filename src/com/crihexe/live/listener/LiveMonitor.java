@@ -1,4 +1,4 @@
-package com.crihexe.live;
+package com.crihexe.live.listener;
 
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.ShortMessage;

@@ -7,6 +7,8 @@ import javax.sound.midi.ShortMessage;
 
 import com.crihexe.live.elements.LiveChord;
 import com.crihexe.live.elements.LiveNote;
+import com.crihexe.live.listener.LiveMonitor;
+import com.crihexe.live.listener.SheetPointerListener;
 import com.crihexe.sheet.Note;
 import com.crihexe.sheet.Sheet;
 import com.crihexe.util.Pair;

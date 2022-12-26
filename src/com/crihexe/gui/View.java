@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.crihexe.live.SheetPointerListener;
+import com.crihexe.live.listener.SheetPointerListener;
 import com.crihexe.sheet.Note;
 import com.crihexe.sheet.Sheet;
 
