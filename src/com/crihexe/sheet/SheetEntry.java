@@ -2,6 +2,8 @@ package com.crihexe.sheet;
 
 import java.util.ArrayList;
 
+import com.crihexe.live.elements.LiveChord;
+
 public class SheetEntry {
 	
 	private ArrayList<Note> notes;
@@ -40,6 +42,15 @@ public class SheetEntry {
 		for(Note n : notes)
 			if(n.equals(note)) return true;
 		return false;
+	}
+	
+	public boolean checkChord(LiveChord chord) {
+		boolean r = true;
+		for(int i = 0; i < chord.chord.size(); i++) {
+			r &= contains(chord.chord.get(i));
+			System.out.println(r);
+		}
+		return r;
 	}
 	
 	public boolean strictlyContains(Note note) {

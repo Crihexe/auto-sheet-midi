@@ -112,16 +112,16 @@ public class View extends JPanel implements Runnable, KeyListener, MouseListener
 		for(int i = 0; i < sheet.size(); i++) {
 			ArrayList<Note> notes = sheet.getEntry(i).getNotes();
 			
+			// x : 60 = duration : 455
+			int spaceBetweenNotesX = (int)(60f * notes.get(0).getDuration() / 455f);
+			//int noteLocalX = i*spaceBetweenNotesX;
+			int noteLocalX = lastLocalX;	// ora funziona, ci ho pensato :)
+			lastLocalX = noteLocalX + spaceBetweenNotesX;
+			
 			for(int j = 0; j < notes.size(); j++) {
 				Note n = notes.get(j);
 				int notesFromSheetBoundXOffset = defaultPageXOffset + 40;
 				
-				// x : 60 = duration : 455
-				int spaceBetweenNotesX = (int)(60f * n.getDuration() / 455f);
-				
-				//int noteLocalX = i*spaceBetweenNotesX;
-				int noteLocalX = lastLocalX;	// sta roba per ora non funziona con gli accordi ma solo con sheetentry singole ma ora non ho voglia di pensarci
-				lastLocalX = noteLocalX + spaceBetweenNotesX;
 				int noteX = notesFromSheetBoundXOffset + noteLocalX;
 				
 				int semiToneOffset = spaceBetweenLinesY/2;
@@ -163,7 +163,7 @@ public class View extends JPanel implements Runnable, KeyListener, MouseListener
 				
 				// ora il pointer
 				if(i == pointer && j == notes.size()-1) {	// faccio sta cazzata perché così se disegno il pointer nel for delle note ho accesso automaticamente a tutti i valori senza doverli ricalcolare
-					g.setColor(new Color(49, 179, 235, 64));
+					g.setColor(new Color(49, 179, 235, 64));	// boh tipo colore azzurrino swag
 					g.fillRect(noteX - 10, defaultPageYOffset - 20, noteWidth + 10 + 10, spaceBetweenLinesY*5 + 40);	// quest'ultimo 5 sta per il numero di linee in un PENTAgramma (5)
 					g.setColor(Color.black);
 				}

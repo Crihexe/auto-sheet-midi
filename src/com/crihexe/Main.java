@@ -46,8 +46,8 @@ public class Main {
 		GUI gui = new GUI();
 		gui.show();
 		
-		Sequence fileSeq = MidiSystem.getSequence(new File("single_1track.mid"));
-		SheetBuilder sb = new SheetBuilder("single1track", fileSeq.getTracks());
+		Sequence fileSeq = MidiSystem.getSequence(new File("multiple_2track.mid"));
+		SheetBuilder sb = new SheetBuilder("multiple2track", fileSeq.getTracks());
 		sb.build();
 		
 		gui.getView().setSheet(sb.result());

@@ -6,6 +6,8 @@ import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 
+import com.crihexe.live.elements.LiveChord;
+import com.crihexe.live.elements.LiveNote;
 import com.crihexe.sheet.Note;
 import com.crihexe.util.Pair;
 
@@ -44,8 +46,9 @@ public class LiveReceiver implements Receiver {
 			} else if(sm.getCommand() == ShortMessage.NOTE_ON) {	// midi on
 				Note note = Note.fromShortMessage(sm);
 				pressedNotes.add(new Pair<Note, Long>(note, timeStamp));
-				
+				System.out.println("THREAD: " + Thread.currentThread().getName());
 				try {
+					onMidiOn(note, timeStamp, timeStamp - lastOnTick);
 					callback.onMidiOn(note, timeStamp, timeStamp - lastOnTick);
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -54,6 +57,45 @@ public class LiveReceiver implements Receiver {
 				lastOnTick = timeStamp;
 			} else callback.onOtherShortMessage(sm, timeStamp);
 		} else callback.onOtherMidiMessage(message, timeStamp);
+	}
+	
+	LiveChord chordStack = new LiveChord();
+	
+	public void onMidiOn(Note note, long timeStamp, long delta) {
+		try {
+			LiveNote ln = new LiveNote(note, timeStamp, delta);
+			
+			// funziona malissimo: solo se inizia con un accordo e ogni accordo è separato dall'altro da una sola nota
+			/*chordStack.chord.add(ln);
+			if(chordStack.chord.size() > 1) {
+				if(chordStack.getDelta() > 80) {
+					
+					callback.onSingleNote(chordStack.chord.remove(chordStack.chord.size()-1)); 
+					
+					callback.onChord(chordStack);	// facciamo finta che clear non distrugge il contenuto dell'oggetto appena passato O.o
+					chordStack.chord.clear();
+					
+				}
+			}*/
+			
+			chordStack.chord.add(ln);
+			if(chordStack.chord.size() > 1) {
+				if(chordStack.getDelta() > 80) {
+					if(chordStack.chord.size() == 2) {
+						callback.onSingleNote(chordStack.chord.remove(0));
+					} else {
+						LiveChord chord = chordStack.subList(0, chordStack.chord.size()-1);
+						
+						chordStack.chord.removeAll(chord.chord);
+						
+						callback.onChord(chord);
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			chordStack.chord.clear();
+		}
 	}
 
 	@Override
